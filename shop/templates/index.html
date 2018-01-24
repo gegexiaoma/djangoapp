@@ -5,5 +5,34 @@
 {% block content %}
 {% include 'ad.html' %}
 <hr />
-<h2>测试ssssssdsfdf</h2>
+<h2>显示作者与书籍</h2>
+
+{% for book in books %}
+
+<div>
+<strong>书名：{{ book.name }} |
+价格：{{ book.price }}</strong>
+<br />
+{% for user in book.user_set.all %}
+&nbsp;&nbsp; 作者：{{ user.name }}
+ </div>   
+{% endfor %}
+</div>
+{% endfor %}
+<br />
+
+{% for user in users %}
+<div>
+<strong>姓名：{{ user.name }}</strong>
+<br />
+{% for book in user.books.all %}
+&nbsp;&nbsp; 书名：{{ book.name }}
+ </div>   
+{% endfor %}
+{% endfor %}
+<hr />
+
+{{ request.path }}
+{{ request.user }}
+
 {% endblock %}

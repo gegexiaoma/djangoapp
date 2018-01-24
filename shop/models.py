@@ -14,7 +14,6 @@ class User(models.Model):
 class Book(models.Model):
     name = models.CharField(max_length=30)
     price = models.FloatField()
-    users = models.ManyToManyField('User', null=True, blank=True)
 
     def __unicode__(self):
         return u"名字: %s 价格: %6.2f" % (self.name, self.price)

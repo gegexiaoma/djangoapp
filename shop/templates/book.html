@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+ 
+{% block title %}添加书籍{% endblock %}
+ 
+{% block content %}
+{% include 'ad.html' %}
+<form action="/book" method="post">
+    {% csrf_token %}
+    {{ form }} <br />
+    <input type="submit" value="提交按钮">
+</form>
+
+{% endblock %}

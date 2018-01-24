@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn" >
 <head>
-<title>{% block title %}默认标题{% endblock %} - 首页</title>
+<title>{% block title %}默认标题 - 首页{% endblock %}</title>
 <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
 <link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" />
 <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
@@ -22,12 +22,14 @@
     <div id="header">
         <div id="branding">
         
-<h1 id="site-name">导航栏</h1>
+<h1 id="site-name">导航栏  <a href=" {% url 'home' %} ">Home</a></h1>
 
         </div>
         
         <div id="user-tools">
             欢迎 | 
+        <a href=" {% url 'books' %} ">增加书</a>|
+        <a href=" {% url 'users' %} ">增加用户</a>|
         
         
         <a href="/admin/">管理登录</a>
