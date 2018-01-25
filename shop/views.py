@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.context import RequestContext
 
+
 from models import User, Book
 
 from django import forms
@@ -16,7 +17,7 @@ class UserForm(forms.Form):
 class UsersForm(ModelForm):
         class Meta:
                 model = User
-                fields = ('name','age','sex')
+                fields = ('name','age','sex','books')
                 labels={
                     'name':"姓名",
                     'age':'年龄',
@@ -26,14 +27,16 @@ class UsersForm(ModelForm):
 class BookForm(forms.Form):
         name = forms.CharField(max_length=30 ,label='书名')
         price = forms.FloatField(label='价格')
+        users = forms.CharField(max_length=30 ,label='作者')
 
 class BooksForm(ModelForm):
         class Meta:
                 model = Book
-                fields = ('name','price')
+                fields = ('name','price', 'users')
                 labels={
                     'name':"书名",
-                    'price':'价格'
+                    'price':'价格',
+                    'users': '作者'
                     }
 
 
@@ -49,15 +52,18 @@ def user(request):
             name = form.cleaned_data["name"]
             age = form.cleaned_data["age"]
             sex = form.cleaned_data["sex"]
-            # books = form.cleaned_data["books"]
-            if not User.objects.filter(name=name):
+            books = form.cleaned_data["books"]
+            if not User.objects.filter(name=name).first():
                 User.objects.create(name=name,age=age,sex=sex)
-                # if User.objects.filter(name=name):
-                    # User.objects.filter(name=name).books.all.append(books)
-        else:
-            return HttpResponse("创建失败")
+                if User.objects.filter(name=name).first():
+                    obj = User.objects.filter(name=name).first()
+                    a = [i.id for i in books]
+                    obj.books.add(*a)
+            else:
+                return HttpResponse("创建失败")
     form = UsersForm()
-    return render(request, 'user.html', {'form':form})
+    users = User.objects.all()
+    return render(request, 'user.html', {'form':form, 'users':users})
     
 def book(request):
     if request.method == 'POST':
@@ -65,9 +71,15 @@ def book(request):
         if form.is_valid():
             name = form.cleaned_data["name"]
             price = form.cleaned_data["price"]
-            if not Book.objects.filter(name=name):
+            users = form.cleaned_data["users"]
+            if not Book.objects.filter(name=name).first():
                 Book.objects.create(name=name,price=price)
-        else:
-            return HttpResponse("创建失败")
+                if Book.objects.filter(name=name).first():
+                    obj = Book.objects.filter(name=name).first()
+                    a = [i.id for i in users]
+                    obj.users.add(*a)
+            else:
+                return HttpResponse("创建失败")
     form = BooksForm()
-    return render(request, 'book.html', {'form':form})
+    books = Book.objects.all()
+    return render(request, 'book.html', {'form':form, 'books':books})

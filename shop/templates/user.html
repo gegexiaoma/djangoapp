@@ -9,6 +9,11 @@
     {{ form }} <br />
     <input type="submit" value="提交按钮">
 </form>
-
-
+<br />
+ <h2>&nbsp;&nbsp; 已有名字</h2>
+{% for user in users %}
+<div>
+<strong>姓名：{{ user.name }}</strong>
+</div>
+{% endfor %}
 {% endblock %}

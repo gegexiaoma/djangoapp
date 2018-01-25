@@ -4,35 +4,44 @@
  
 {% block content %}
 {% include 'ad.html' %}
-<hr />
-<h2>显示作者与书籍</h2>
-
+<h1>&nbsp;&nbsp;书籍</h1>
 {% for book in books %}
-
-<div>
-<strong>书名：{{ book.name }} |
-价格：{{ book.price }}</strong>
-<br />
-{% for user in book.user_set.all %}
-&nbsp;&nbsp; 作者：{{ user.name }}
- </div>   
-{% endfor %}
+<div><strong>书名：{{ book.name }} |价格：{{ book.price }}</strong></div>
+    {% for user in book.user_set.all %}
+    <div>
+    &nbsp;&nbsp;&nbsp;&nbsp; 作者：{{ user.name }}
+    </div> 
+    {% endfor %}
+    {% for user in book.users.all %}
+    <div>
+    &nbsp;&nbsp;&nbsp;&nbsp; 作者：{{ user.name }}
+    </div>  
+    {% endfor %}
 </div>
 {% endfor %}
-<br />
-
+<hr />
+<hr />
+<hr />
+<hr />
+<h1>&nbsp;&nbsp;作者</h1>
 {% for user in users %}
-<div>
-<strong>姓名：{{ user.name }}</strong>
-<br />
-{% for book in user.books.all %}
-&nbsp;&nbsp; 书名：{{ book.name }}
- </div>   
-{% endfor %}
+<div><strong>姓名：{{ user.name }}</strong></div>
+    {% for book in user.books.all %}
+    <div>
+    &nbsp;&nbsp;&nbsp;&nbsp; 书名：{{ book.name }}
+    </div>
+    {% endfor %}
+    {% for book in user.book_set.all %}
+    <div>
+    &nbsp;&nbsp;&nbsp;&nbsp; 书名：{{ book.name }}
+     </div>  
+    {% endfor %}
 {% endfor %}
 <hr />
-
-{{ request.path }}
-{{ request.user }}
-
+<hr />
+<hr />
+<hr />
+<hr />
+<hr />
+<div><b>访问者:{{ request.user }}</b></div>
 {% endblock %}

@@ -10,4 +10,11 @@
     <input type="submit" value="提交按钮">
 </form>
 
+<br />
+<h2>&nbsp;&nbsp; 已有书籍</h2>
+{% for book in books %}
+<div>
+<strong>书名：{{ book.name }}</strong>
+</div>
+{% endfor %}
 {% endblock %}
